@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/services/notification_service.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+// import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'screens/home_screen.dart';
 
 void main() async{
     // Initialize FFI
-  sqfliteFfiInit();
+  // sqfliteFfiInit();
   // Use ffi factory for desktop
-  databaseFactory = databaseFactoryFfi;
+  // databaseFactory = databaseFactoryFfi;
   WidgetsFlutterBinding.ensureInitialized();
   await NotificationService.initialize();
   await NotificationService.scheduleNotification(
-  id: 1,
-  title: 'Test Notification',
-  body: 'Triggered after 5 seconds',
-  scheduledTime: DateTime.now().add(Duration(seconds: 5)),
-);
+    id: 1,
+    title: 'Test Notification',
+    body: 'Triggered after 5 seconds',
+    scheduledTime: DateTime.now().add(Duration(seconds: 5)),
+  );
 
   runApp(const MyApp());
 } 
