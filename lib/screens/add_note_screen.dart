@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:notes_app/services/notification_service.dart';
 import '../models/note_model.dart';
 import '../services/db_helper.dart';
 
 class AddNoteScreen extends StatefulWidget {
   final Note? note; // null = new note, not null = edit existing
+  
 
   const AddNoteScreen({Key? key, this.note}) : super(key: key);
 
@@ -17,6 +19,7 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
   late TextEditingController _titleController;
   late TextEditingController _descController;
   File? _image;
+  DateTime? _reminderTime;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -68,6 +71,15 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
 
     if (!mounted) return;
     Navigator.of(context).pop(true); // send result to refresh list
+    if (_reminderTime != null) {
+    await NotificationService.scheduleNotification(
+      id: DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      title: _titleController.text,
+      body: _descController.text,
+      time: _reminderTime!,
+    );
+}
+
   }
 
   @override
@@ -111,6 +123,42 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                 ),
               ],
             ),
+            ListTile(
+  title: Text(
+    _reminderTime == null
+        ? 'No reminder set'
+        : 'Reminder: ${_reminderTime.toString().substring(0, 16)}',
+  ),
+  trailing: IconButton(
+    icon: const Icon(Icons.alarm),
+    onPressed: () async {
+      final date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2100),
+      );
+      if (date != null) {
+        final time = await showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        );
+        if (time != null) {
+          setState(() {
+            _reminderTime = DateTime(
+              date.year,
+              date.month,
+              date.day,
+              time.hour,
+              time.minute,
+            );
+          });
+        }
+      }
+    },
+  ),
+),
+
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: _saveNote,

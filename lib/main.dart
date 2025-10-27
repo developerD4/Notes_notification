@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/services/notification_service.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'screens/home_screen.dart';
 
-void main(){
+void main() async{
     // Initialize FFI
   sqfliteFfiInit();
   // Use ffi factory for desktop
   databaseFactory = databaseFactoryFfi;
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationService.init();
   runApp(const MyApp());
 } 
 
