@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: _notes.length,
               itemBuilder: (context, i) {
                 final note = _notes[i];
-               return Card(
+                return Card(
                   margin: EdgeInsets.all(8),
                   child: ListTile(
                     onTap: () async {
@@ -46,13 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => AddNoteScreen(note: note), // pass the note
+                          builder: (_) =>
+                              AddNoteScreen(note: note), // pass the note
                         ),
                       );
                       _loadNotes(); // reload notes after editing
                     },
                     leading: note.imagePath != null
-                        ? Image.file(File(note.imagePath!), width: 50, fit: BoxFit.cover)
+                        ? Image.file(
+                            File(note.imagePath!),
+                            width: 50,
+                            fit: BoxFit.cover,
+                          )
                         : Icon(Icons.note, size: 40, color: Colors.teal),
                     title: Text(note.title),
                     subtitle: Text(note.description),

@@ -1,14 +1,16 @@
 class Note {
-  int? id;
-  String title;
-  String description;
-  String? imagePath;
+  final int? id;
+  final String title;
+  final String description;
+  final String? imagePath;
+  final String? reminderTime; // <-- new field
 
   Note({
     this.id,
     required this.title,
     required this.description,
     this.imagePath,
+    this.reminderTime,
   });
 
   Map<String, dynamic> toMap() {
@@ -17,6 +19,7 @@ class Note {
       'title': title,
       'description': description,
       'imagePath': imagePath,
+      'reminderTime': reminderTime, // new field
     };
   }
 
@@ -26,6 +29,7 @@ class Note {
       title: map['title'],
       description: map['description'],
       imagePath: map['imagePath'],
+      reminderTime: map['reminderTime'],
     );
   }
 }

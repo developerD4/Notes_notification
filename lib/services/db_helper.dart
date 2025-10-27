@@ -1,5 +1,5 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'package:sqflite/sqflite.dart';//mobile
+import 'package:sqflite_common_ffi/sqflite_ffi.dart'; // windows
 import 'package:path/path.dart';
 import '../models/note_model.dart';
 
@@ -16,7 +16,7 @@ class DBHelper {
       version: 1,
       onCreate: (db, version) async {
         await db.execute(
-          'CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, imagePath TEXT)',
+          'CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, description TEXT, imagePath TEXT, reminderTime TEXT)',
         );
       },
     );

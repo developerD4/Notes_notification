@@ -9,7 +9,14 @@ void main() async{
   // Use ffi factory for desktop
   databaseFactory = databaseFactoryFfi;
   WidgetsFlutterBinding.ensureInitialized();
-  await NotificationService.init();
+  await NotificationService.initialize();
+  await NotificationService.scheduleNotification(
+  id: 1,
+  title: 'Test Notification',
+  body: 'Triggered after 5 seconds',
+  scheduledTime: DateTime.now().add(Duration(seconds: 5)),
+);
+
   runApp(const MyApp());
 } 
 
